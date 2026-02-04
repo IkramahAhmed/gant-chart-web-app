@@ -7,9 +7,15 @@ import styles from './TaskModal.module.css';
 interface TaskModalProps {
   isOpen: boolean;
   task?: Task | null;
+  tasks?: Task[]; // All tasks for dependency selection
   onClose: () => void;
   onSave: (task: Omit<Task, 'id'> & { id?: string }) => void;
   onDelete?: (id: string) => void;
+  onAddDependency?: (
+    fromTaskId: string,
+    toTaskId: string,
+    type: string
+  ) => void;
 }
 
 /**
@@ -20,9 +26,11 @@ interface TaskModalProps {
 export function TaskModal({
   isOpen,
   task,
+  tasks = [],
   onClose,
   onSave,
   onDelete,
+  onAddDependency,
 }: TaskModalProps) {
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -30,6 +38,10 @@ export function TaskModal({
   const [assignee, setAssignee] = useState('');
   const [progress, setProgress] = useState(0);
   const [color, setColor] = useState('#3b82f6');
+  const [selectedDependencies, setSelectedDependencies] = useState<string[]>(
+    []
+  );
+  const [dependencyType, setDependencyType] = useState('finish-to-start');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Initialize form when task changes
@@ -41,6 +53,7 @@ export function TaskModal({
       setAssignee(task.assignee);
       setProgress(task.progress);
       setColor(task.color || '#3b82f6');
+      setSelectedDependencies(task.dependencies || []);
     } else {
       // Reset form for new task
       const today = new Date();
@@ -52,6 +65,7 @@ export function TaskModal({
       setAssignee('');
       setProgress(0);
       setColor('#3b82f6');
+      setSelectedDependencies([]);
     }
     setErrors({});
   }, [task, isOpen]);
@@ -109,9 +123,20 @@ export function TaskModal({
       assignee: assignee.trim(),
       progress: Math.round(progress),
       color,
+      dependencies: selectedDependencies,
     };
 
     onSave(taskData);
+
+    // Add dependencies if callback provided
+    if (onAddDependency && task?.id && selectedDependencies.length > 0) {
+      selectedDependencies.forEach((depTaskId) => {
+        if (depTaskId !== task.id) {
+          onAddDependency(depTaskId, task.id, dependencyType);
+        }
+      });
+    }
+
     onClose();
   };
 
@@ -322,6 +347,68 @@ export function TaskModal({
               <span className={styles.colorValue}>{color}</span>
             </div>
           </div>
+
+          {task && tasks.length > 1 && (
+            <>
+              <div className={styles.formGroup}>
+                <label htmlFor="task-dependencies" className={styles.label}>
+                  Dependencies (Tasks this depends on)
+                </label>
+                <select
+                  id="task-dependencies"
+                  multiple
+                  value={selectedDependencies}
+                  onChange={(e) => {
+                    const values = Array.from(
+                      e.target.selectedOptions,
+                      (option) => option.value
+                    );
+                    setSelectedDependencies(values);
+                  }}
+                  className={styles.input}
+                  size={4}
+                  style={{ minHeight: '100px' }}
+                  aria-label="Select dependent tasks"
+                >
+                  {tasks
+                    .filter((t) => t.id !== task.id)
+                    .map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.title} ({t.assignee})
+                      </option>
+                    ))}
+                </select>
+                <small
+                  style={{
+                    color: '#6b7280',
+                    fontSize: '12px',
+                    marginTop: '4px',
+                    display: 'block',
+                  }}
+                >
+                  Hold Ctrl/Cmd to select multiple tasks
+                </small>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="dependency-type" className={styles.label}>
+                  Dependency Type
+                </label>
+                <select
+                  id="dependency-type"
+                  value={dependencyType}
+                  onChange={(e) => setDependencyType(e.target.value)}
+                  className={styles.input}
+                  aria-label="Dependency type"
+                >
+                  <option value="finish-to-start">Finish to Start</option>
+                  <option value="start-to-start">Start to Start</option>
+                  <option value="finish-to-finish">Finish to Finish</option>
+                  <option value="start-to-finish">Start to Finish</option>
+                </select>
+              </div>
+            </>
+          )}
 
           <div className={styles.modalActions}>
             {task && onDelete && (

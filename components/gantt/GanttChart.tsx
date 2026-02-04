@@ -3,13 +3,15 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Task } from '@/lib/types';
+import { Task, Dependency } from '@/lib/types';
 import { useTasks } from '@/hooks/useTasks';
+import { useDependencies } from '@/hooks/useDependencies';
 import { getChartDateRange } from '@/lib/utils/ganttUtils';
 import { resolveTaskConflicts, countConflicts } from '@/lib/utils/agentUtils';
 import { Timeline } from './Timeline';
 import { TaskList } from './TaskList';
 import { TaskBar } from './TaskBar';
+import { DependencyArrow } from './DependencyArrow';
 import { TaskModal } from '@/components/modals/TaskModal';
 import { useTimelineDrop } from '@/hooks/useDragDrop';
 import styles from './GanttChart.module.css';
@@ -51,6 +53,7 @@ function DndProviderWrapper({ children }: { children: React.ReactNode }) {
  */
 export function GanttChart() {
   const { tasks, addTask, updateTask, deleteTask } = useTasks();
+  const { dependencies, addDependency } = useDependencies();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [conflictCount, setConflictCount] = useState(0);
@@ -148,6 +151,20 @@ export function GanttChart() {
     setTimeout(() => setAgentMessage(null), 4000);
   };
 
+  const handleAddDependency = (
+    fromTaskId: string,
+    toTaskId: string,
+    type: string
+  ) => {
+    const dependency: Dependency = {
+      id: `${fromTaskId}-${toTaskId}-${Date.now()}`,
+      fromTaskId,
+      toTaskId,
+      type: type as Dependency['type'],
+    };
+    addDependency(dependency);
+  };
+
   return (
     <DndProviderWrapper>
       <GanttChartContent
@@ -166,6 +183,8 @@ export function GanttChart() {
         onMoveTask={handleMoveTask}
         onResizeTask={handleResizeTask}
         onAgentResolve={handleAgentResolve}
+        dependencies={dependencies}
+        onAddDependency={handleAddDependency}
       />
     </DndProviderWrapper>
   );
@@ -191,6 +210,8 @@ function GanttChartContent({
   onMoveTask,
   onResizeTask,
   onAgentResolve,
+  dependencies,
+  onAddDependency,
 }: {
   tasks: Task[];
   dateRange: { start: Date; end: Date };
@@ -207,6 +228,8 @@ function GanttChartContent({
   onMoveTask: (taskId: string, newStartDate: Date, newEndDate: Date) => void;
   onResizeTask: (taskId: string, newStartDate: Date, newEndDate: Date) => void;
   onAgentResolve: () => void;
+  dependencies: Dependency[];
+  onAddDependency: (fromTaskId: string, toTaskId: string, type: string) => void;
 }) {
   const { drop: timelineDrop } = useTimelineDrop();
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -281,6 +304,49 @@ function GanttChartContent({
             ref={timelineRef}
             data-timeline-container
           >
+            {/* SVG layer for dependency arrows */}
+            <svg
+              className={styles.dependencyLayer}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: 0,
+              }}
+            >
+              {dependencies.map((dependency) => {
+                const fromTask = tasks.find(
+                  (t) => t.id === dependency.fromTaskId
+                );
+                const toTask = tasks.find((t) => t.id === dependency.toTaskId);
+                if (!fromTask || !toTask) return null;
+
+                const fromIndex = tasks.findIndex(
+                  (t) => t.id === dependency.fromTaskId
+                );
+                const toIndex = tasks.findIndex(
+                  (t) => t.id === dependency.toTaskId
+                );
+
+                return (
+                  <DependencyArrow
+                    key={dependency.id}
+                    dependency={dependency}
+                    fromTask={fromTask}
+                    toTask={toTask}
+                    chartStartDate={dateRange.start}
+                    zoomLevel={zoomLevel}
+                    fromTaskIndex={fromIndex}
+                    toTaskIndex={toIndex}
+                  />
+                );
+              })}
+            </svg>
+
+            {/* Task bars */}
             {tasks.map((task, index) => (
               <TaskBar
                 key={task.id}
@@ -301,9 +367,11 @@ function GanttChartContent({
       <TaskModal
         isOpen={isModalOpen}
         task={editingTask}
+        tasks={tasks}
         onClose={onCloseModal}
         onSave={onSaveTask}
         onDelete={onDeleteTask}
+        onAddDependency={onAddDependency}
       />
     </div>
   );

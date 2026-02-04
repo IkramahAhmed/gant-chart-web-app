@@ -36,8 +36,16 @@ export function DependencyArrow({
   const { TASK_ROW_HEIGHT } = getGanttConstants();
 
   // Calculate positions
-  const fromLeft = getTaskBarLeft(fromTask.startDate, chartStartDate, zoomLevel);
-  const fromWidth = getTaskBarWidth(fromTask.startDate, fromTask.endDate, zoomLevel);
+  const fromLeft = getTaskBarLeft(
+    fromTask.startDate,
+    chartStartDate,
+    zoomLevel
+  );
+  const fromWidth = getTaskBarWidth(
+    fromTask.startDate,
+    fromTask.endDate,
+    zoomLevel
+  );
   const fromTop = getTaskRowTop(fromTaskIndex);
   const fromCenterY = fromTop + TASK_ROW_HEIGHT / 2;
 
@@ -110,4 +118,3 @@ export function DependencyArrow({
     </g>
   );
 }
-
