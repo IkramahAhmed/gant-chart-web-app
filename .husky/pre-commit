@@ -1,8 +1,5 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Run lint-staged for formatting and linting
-npx lint-staged
+npx --no lint-staged
 
 # Run security audit (warn only, don't block)
 npm audit --audit-level=moderate || true

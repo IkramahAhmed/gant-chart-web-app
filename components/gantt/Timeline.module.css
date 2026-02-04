@@ -4,19 +4,24 @@
 
 .timeline {
   display: flex;
-  border-bottom: 1px solid #e5e7eb;
-  background-color: #ffffff;
+  border-bottom: 2px solid #e2e8f0;
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
   min-height: 60px;
 }
 
 .timelineCell {
-  border-right: 1px solid #e5e7eb;
-  padding: 8px 4px;
+  border-right: 1px solid #f1f5f9;
+  padding: 12px 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background-color: #ffffff;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.timelineCell:hover {
+  background-color: #f8fafc;
 }
 
 .dateLabel {

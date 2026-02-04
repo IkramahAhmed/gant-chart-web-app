@@ -1,0 +1,53 @@
+# Development Rules & Best Practices
+
+## Core Principles
+
+1. **Keep It Simple (KISS)**
+   - Don't over-engineer solutions
+   - Use simple, straightforward approaches
+   - Avoid premature optimization
+   - Prefer built-in solutions over custom implementations
+
+2. **UI/UX Best Practices**
+   - Clean, modern design with proper spacing
+   - Consistent color scheme and typography
+   - Smooth transitions and hover effects
+   - Clear visual hierarchy
+   - Accessible (WCAG AA compliance)
+   - Responsive design (mobile-first)
+
+3. **Code Quality**
+   - One responsibility per component/function
+   - Meaningful variable and function names
+   - DRY (Don't Repeat Yourself)
+   - TypeScript strict mode
+   - Proper error handling
+
+4. **Performance**
+   - Use React.memo for expensive components
+   - Debounce/throttle expensive operations
+   - Lazy load when appropriate
+   - Optimize re-renders
+
+5. **Security**
+   - Validate all user inputs
+   - Sanitize data before rendering
+   - Use TypeScript for type safety
+   - Regular dependency audits
+
+6. **Commits**
+   - One-line conventional commits
+   - Format: `type(scope): subject`
+   - Types: feat, fix, docs, style, refactor, test, chore
+   - Max 72 characters
+
+## UI/UX Guidelines
+
+- Use modern color palette (slate/gray tones)
+- Subtle shadows and borders for depth
+- Gradient buttons for primary actions
+- Hover states on all interactive elements
+- Smooth transitions (0.2s ease)
+- Proper spacing (8px grid system)
+- Clear visual feedback for user actions
+

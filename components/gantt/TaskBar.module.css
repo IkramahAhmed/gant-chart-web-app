@@ -5,27 +5,40 @@
 .taskBarContainer {
   position: absolute;
   margin-top: 4px;
-  cursor: pointer;
+  cursor: move;
   z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.taskBarContainer.dragging {
+  opacity: 0.5;
 }
 
 .taskBar {
   position: relative;
   height: 100%;
-  border-radius: 4px;
-  padding: 4px 8px;
+  width: 100%;
+  border-radius: 6px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
   overflow: hidden;
+  cursor: move;
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .taskBar:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .taskBar:focus-visible {
@@ -75,6 +88,37 @@
   transition: width 0.3s ease;
 }
 
+/* Resize handles */
+.resizeHandle {
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize;
+  background-color: transparent;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  transition: background-color 0.2s ease;
+}
+
+.resizeHandle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.resizeHandleLeft {
+  left: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.resizeHandleRight {
+  right: 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.resizeHandle:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .taskBar {
@@ -88,5 +132,9 @@
   .taskBarProgress {
     font-size: 10px;
     padding: 1px 4px;
+  }
+
+  .resizeHandle {
+    width: 12px;
   }
 }
