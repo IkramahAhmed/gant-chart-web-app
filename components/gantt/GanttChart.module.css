@@ -20,7 +20,7 @@
 
 .ganttGrid {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 400px 1fr;
   height: 100%;
   overflow: hidden;
 }
@@ -298,7 +298,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .ganttGrid {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 300px 1fr;
   }
 
   .taskListHeader {
