@@ -1,0 +1,23 @@
+/**
+ * Dependency Arrow Styles
+ */
+
+.dependencyArrow {
+  pointer-events: none;
+  z-index: 0;
+}
+
+.arrowPath {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(139, 92, 246, 0.3));
+}
+
+.arrowPath:hover {
+  stroke-width: 3;
+  filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.5));
+}
+
+.arrowHead {
+  filter: drop-shadow(0 1px 2px rgba(139, 92, 246, 0.3));
+}
+
