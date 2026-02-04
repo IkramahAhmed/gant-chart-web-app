@@ -20,7 +20,7 @@
 
 .ganttGrid {
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 320px 1fr;
   height: 100%;
   overflow: hidden;
 }
@@ -37,15 +37,14 @@
 }
 
 .taskListHeader {
-  padding: 24px 20px;
+  padding: 20px 16px;
   border-bottom: 2px solid rgba(226, 232, 240, 0.6);
   background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
   position: sticky;
   top: 0;
   z-index: 10;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 12px;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -60,21 +59,24 @@
   background-clip: text;
   margin: 0;
   letter-spacing: -0.5px;
+  width: 100%;
 }
 
 .headerActions {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .agentButton {
-  padding: 10px 18px;
+  padding: 8px 14px;
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: #ffffff;
   border: none;
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -87,6 +89,9 @@
   align-items: center;
   gap: 6px;
   overflow: hidden;
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
 }
 
 .agentButton::before {
@@ -199,12 +204,12 @@
 }
 
 .addButton {
-  padding: 10px 20px;
+  padding: 8px 16px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #ffffff;
   border: none;
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -214,6 +219,8 @@
     0 2px 4px -1px rgba(102, 126, 234, 0.2);
   position: relative;
   overflow: hidden;
+  flex: 1;
+  min-width: 0;
 }
 
 .addButton::before {
@@ -291,7 +298,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .ganttGrid {
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 240px 1fr;
   }
 
   .taskListHeader {
@@ -300,6 +307,15 @@
 
   .headerTitle {
     font-size: 16px;
+  }
+
+  .headerActions {
+    flex-direction: column;
+  }
+
+  .agentButton,
+  .addButton {
+    width: 100%;
   }
 }
 

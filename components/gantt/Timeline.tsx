@@ -40,10 +40,22 @@ export function Timeline({ startDate, endDate, zoomLevel }: TimelineProps) {
           aria-label={`Date: ${date.toLocaleDateString()}`}
         >
           <div className={styles.dateLabel}>
-            {date.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-            })}
+            <div
+              style={{
+                fontSize: '11px',
+                fontWeight: 500,
+                color: '#64748b',
+                marginBottom: '2px',
+              }}
+            >
+              {date.toLocaleDateString('en-US', { weekday: 'short' })}
+            </div>
+            <div>
+              {date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+              })}
+            </div>
           </div>
         </div>
       ))}
