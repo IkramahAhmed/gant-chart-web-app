@@ -6,6 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Task } from '@/lib/types';
 import { useTasks } from '@/hooks/useTasks';
 import { getChartDateRange } from '@/lib/utils/ganttUtils';
+import { resolveTaskConflicts, countConflicts } from '@/lib/utils/agentUtils';
 import { Timeline } from './Timeline';
 import { TaskList } from './TaskList';
 import { TaskBar } from './TaskBar';
@@ -52,9 +53,17 @@ export function GanttChart() {
   const { tasks, addTask, updateTask, deleteTask } = useTasks();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [conflictCount, setConflictCount] = useState(0);
+  const [agentMessage, setAgentMessage] = useState<string | null>(null);
 
   const dateRange = useMemo(() => getChartDateRange(tasks), [tasks]);
   const zoomLevel: 'day' | 'week' | 'month' = 'day';
+
+  // Update conflict count when tasks change
+  useEffect(() => {
+    const conflicts = countConflicts(tasks);
+    setConflictCount(conflicts);
+  }, [tasks]);
 
   const handleAddTask = () => {
     setEditingTask(null);
@@ -111,6 +120,34 @@ export function GanttChart() {
     });
   };
 
+  const handleAgentResolve = () => {
+    const conflictsBefore = countConflicts(tasks);
+    if (conflictsBefore === 0) {
+      setAgentMessage(
+        'No conflicts detected. All tasks are properly scheduled!'
+      );
+      setTimeout(() => setAgentMessage(null), 3000);
+      return;
+    }
+
+    // Resolve conflicts
+    const resolvedTasks = resolveTaskConflicts(tasks);
+
+    // Update all tasks
+    resolvedTasks.forEach((resolvedTask) => {
+      updateTask(resolvedTask.id, {
+        startDate: resolvedTask.startDate,
+        endDate: resolvedTask.endDate,
+      });
+    });
+
+    const conflictsAfter = countConflicts(resolvedTasks);
+    setAgentMessage(
+      `Resolved ${conflictsBefore} conflict(s). ${conflictsAfter} remaining.`
+    );
+    setTimeout(() => setAgentMessage(null), 4000);
+  };
+
   return (
     <DndProviderWrapper>
       <GanttChartContent
@@ -119,6 +156,8 @@ export function GanttChart() {
         zoomLevel={zoomLevel}
         isModalOpen={isModalOpen}
         editingTask={editingTask}
+        conflictCount={conflictCount}
+        agentMessage={agentMessage}
         onAddTask={handleAddTask}
         onEditTask={handleEditTask}
         onCloseModal={handleCloseModal}
@@ -126,6 +165,7 @@ export function GanttChart() {
         onDeleteTask={handleDeleteTask}
         onMoveTask={handleMoveTask}
         onResizeTask={handleResizeTask}
+        onAgentResolve={handleAgentResolve}
       />
     </DndProviderWrapper>
   );
@@ -141,6 +181,8 @@ function GanttChartContent({
   zoomLevel,
   isModalOpen,
   editingTask,
+  conflictCount,
+  agentMessage,
   onAddTask,
   onEditTask,
   onCloseModal,
@@ -148,12 +190,15 @@ function GanttChartContent({
   onDeleteTask,
   onMoveTask,
   onResizeTask,
+  onAgentResolve,
 }: {
   tasks: Task[];
   dateRange: { start: Date; end: Date };
   zoomLevel: 'day' | 'week' | 'month';
   isModalOpen: boolean;
   editingTask: Task | null;
+  conflictCount: number;
+  agentMessage: string | null;
   onAddTask: () => void;
   onEditTask: (task: Task) => void;
   onCloseModal: () => void;
@@ -161,6 +206,7 @@ function GanttChartContent({
   onDeleteTask: (id: string) => void;
   onMoveTask: (taskId: string, newStartDate: Date, newEndDate: Date) => void;
   onResizeTask: (taskId: string, newStartDate: Date, newEndDate: Date) => void;
+  onAgentResolve: () => void;
 }) {
   const { drop: timelineDrop } = useTimelineDrop();
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -179,15 +225,45 @@ function GanttChartContent({
         <div className={styles.taskListContainer}>
           <div className={styles.taskListHeader}>
             <h2 className={styles.headerTitle}>Tasks</h2>
-            <button
-              className={styles.addButton}
-              onClick={onAddTask}
-              aria-label="Add new task"
-              type="button"
-            >
-              + Add Task
-            </button>
+            <div className={styles.headerActions}>
+              <button
+                className={`${styles.agentButton} ${
+                  conflictCount > 0 ? styles.agentButtonWarning : ''
+                }`}
+                onClick={onAgentResolve}
+                aria-label="Resolve task conflicts"
+                type="button"
+                title={
+                  conflictCount > 0
+                    ? `Resolve ${conflictCount} conflict(s)`
+                    : 'No conflicts detected'
+                }
+              >
+                🤖 Agent
+                {conflictCount > 0 && (
+                  <span className={styles.conflictBadge}>{conflictCount}</span>
+                )}
+              </button>
+              <button
+                className={styles.addButton}
+                onClick={onAddTask}
+                aria-label="Add new task"
+                type="button"
+              >
+                + Add Task
+              </button>
+            </div>
           </div>
+          {agentMessage && (
+            <div
+              className={`${styles.agentMessage} ${
+                conflictCount === 0 ? styles.agentMessageSuccess : ''
+              }`}
+              role="alert"
+            >
+              {agentMessage}
+            </div>
+          )}
           <TaskList tasks={tasks} onTaskClick={onEditTask} />
         </div>
 
