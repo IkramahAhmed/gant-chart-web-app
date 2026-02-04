@@ -4,11 +4,12 @@
 
 .taskBarContainer {
   position: absolute;
-  margin-top: 4px;
+  margin-top: 0;
   cursor: move;
   z-index: 1;
   display: flex;
   align-items: center;
+  height: 40px;
 }
 
 .taskBarContainer.dragging {

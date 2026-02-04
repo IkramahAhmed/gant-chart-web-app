@@ -18,9 +18,10 @@ I've built a Gantt Chart web application for project management. It's a simple, 
 **Try it out:**
 https://gant-chart-web-6kum9slwi-ikramahahmeds-projects.vercel.app/
 
-*Built in just one hour - a quick project management solution!*
+_Built in just one hour - a quick project management solution!_
 
 **Features:**
+
 - ✅ Create and manage tasks with dates
 - ✅ Drag and drop to edit tasks
 - ✅ Automatic conflict resolution
@@ -42,9 +43,10 @@ I've created a Gantt Chart web application that we can use for project managemen
 
 **Access:** https://gant-chart-web-6kum9slwi-ikramahahmeds-projects.vercel.app/
 
-*Built in just one hour - a quick project management solution!*
+_Built in just one hour - a quick project management solution!_
 
 **What you can do:**
+
 - Create tasks with start/end dates
 - Assign tasks to team members
 - Track progress
@@ -54,4 +56,3 @@ I've created a Gantt Chart web application that we can use for project managemen
 It's ready to use - just open the link and start managing your projects!
 
 Best regards
-

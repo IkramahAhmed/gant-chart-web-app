@@ -11,6 +11,7 @@ Just human-friendly project management tool for teams and individuals.
 ## ✨ Features
 
 ### Core Functionality
+
 - ✅ Interactive Gantt chart with real date ranges
 - ✅ Drag and drop task editing (move and resize)
 - ✅ Modal UI for adding/editing tasks
@@ -18,12 +19,14 @@ Just human-friendly project management tool for teams and individuals.
 - ✅ Task color coding
 
 ### Advanced Features
+
 - 🤖 **Agent Feature**: Automatically resolves overlapping tasks
 - 🔗 **Task Dependencies**: Define task relationships with visual arrows
 - 📊 **Progress Visualization**: Show completion percentage in task bars
 - 📱 **Responsive Design**: Works on desktop and mobile devices
 
 ### UI/UX
+
 - Modern gradient design
 - Clean, intuitive interface
 - Smooth animations and transitions
@@ -32,23 +35,27 @@ Just human-friendly project management tool for teams and individuals.
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18.17.0 or higher
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd gant_chart
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -73,21 +80,25 @@ npm start
 ## 🎯 How to Use
 
 ### Creating Tasks
+
 1. Click the "+ Add Task" button
 2. Fill in task details (title, dates, assignee, progress)
 3. Choose a color for the task
 4. Click "Save"
 
 ### Editing Tasks
+
 1. Click on any task bar or task name
 2. Modify the details in the modal
 3. Click "Save"
 
 ### Drag and Drop
+
 - **Move a task**: Drag the task bar horizontally
 - **Resize a task**: Drag the left or right edge of the task bar
 
 ### Dependencies
+
 1. Edit a task
 2. Scroll to "Dependencies" section
 3. Select tasks this task depends on (Ctrl/Cmd for multiple)
@@ -99,6 +110,7 @@ npm start
 5. Save - arrows will appear on the timeline
 
 ### Agent (Conflict Resolution)
+
 1. If tasks overlap, the Agent button shows a conflict count
 2. Click the "🤖 Agent" button
 3. The system automatically pushes overlapping tasks forward
@@ -136,17 +148,20 @@ gant_chart/
 ## 🎨 Features in Detail
 
 ### Task Management
+
 - Create, read, update, and delete tasks
 - Assign tasks to team members
 - Track progress (0-100%)
 - Custom color coding
 
 ### Dependency Management
+
 - Visual arrows showing task relationships
 - Support for 4 dependency types
 - Automatic cleanup when tasks are deleted
 
 ### Conflict Resolution
+
 - Real-time conflict detection
 - One-click automatic resolution
 - Preserves task durations
@@ -172,4 +187,3 @@ This is a private project. For issues or suggestions, please contact the project
 ## 🙏 Acknowledgments
 
 Built with modern web technologies following best practices for UI/UX, accessibility, and code quality.
-

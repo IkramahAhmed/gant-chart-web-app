@@ -75,7 +75,7 @@ export function TaskBar({
         top: `${top}px`,
         left: `${left}px`,
         width: `${width}px`,
-        height: `${TASK_ROW_HEIGHT - 8}px`,
+        height: `${TASK_ROW_HEIGHT}px`,
       }}
       role="button"
       tabIndex={0}
