@@ -33,6 +33,10 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .headerTitle {
@@ -40,6 +44,28 @@
   font-weight: 600;
   color: #111827;
   margin: 0;
+}
+
+.addButton {
+  padding: 6px 12px;
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.addButton:hover {
+  background-color: #2563eb;
+}
+
+.addButton:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
 }
 
 /* Timeline Area */

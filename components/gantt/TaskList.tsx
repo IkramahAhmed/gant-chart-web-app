@@ -6,13 +6,14 @@ import styles from './TaskList.module.css';
 
 interface TaskListProps {
   tasks: Task[];
+  onTaskClick?: (task: Task) => void;
 }
 
 /**
  * Task List component
  * Displays task names and assignees in the left sidebar
  */
-export function TaskList({ tasks }: TaskListProps) {
+export function TaskList({ tasks, onTaskClick }: TaskListProps) {
   const { TASK_ROW_HEIGHT } = getGanttConstants();
 
   return (
@@ -24,6 +25,14 @@ export function TaskList({ tasks }: TaskListProps) {
           style={{ height: `${TASK_ROW_HEIGHT}px` }}
           role="listitem"
           aria-label={`Task: ${task.title}, Assignee: ${task.assignee}`}
+          onClick={() => onTaskClick?.(task)}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onTaskClick?.(task);
+            }
+          }}
         >
           <div className={styles.taskInfo}>
             <div

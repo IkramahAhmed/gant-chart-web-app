@@ -14,6 +14,7 @@ interface TaskBarProps {
   taskIndex: number;
   chartStartDate: Date;
   zoomLevel: ZoomLevel;
+  onClick?: () => void;
 }
 
 /**
@@ -25,6 +26,7 @@ export function TaskBar({
   taskIndex,
   chartStartDate,
   zoomLevel,
+  onClick,
 }: TaskBarProps) {
   const { TASK_ROW_HEIGHT } = getGanttConstants();
   const left = getTaskBarLeft(task.startDate, chartStartDate, zoomLevel);
@@ -42,6 +44,13 @@ export function TaskBar({
       }}
       role="button"
       tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
       aria-label={`Task: ${task.title}, Progress: ${task.progress}%, From ${task.startDate.toLocaleDateString()} to ${task.endDate.toLocaleDateString()}`}
     >
       <div
