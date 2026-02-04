@@ -2,6 +2,12 @@
 
 A modern, interactive Gantt chart application built with Next.js 14, TypeScript, and React. Perfect for project management with drag-and-drop task editing, automatic conflict resolution, and visual dependency tracking.
 
+## 🌐 Live Demo
+
+**Access the live application:** [https://gant-chart-web-6kum9slwi-ikramahahmeds-projects.vercel.app/](https://gant-chart-web-6kum9slwi-ikramahahmeds-projects.vercel.app/)
+
+Just human-friendly project management tool for teams and individuals.
+
 ## ✨ Features
 
 ### Core Functionality
