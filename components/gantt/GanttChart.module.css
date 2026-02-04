@@ -1,0 +1,96 @@
+/**
+ * Gantt Chart Container Styles
+ * Responsive grid layout with task list and timeline
+ */
+
+.ganttContainer {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.ganttGrid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Task List Sidebar */
+.taskListContainer {
+  border-right: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.taskListHeader {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* Timeline Area */
+.timelineContainer {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.timelineHeader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.timelineContent {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+  min-height: 400px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ganttGrid {
+    grid-template-columns: 180px 1fr;
+  }
+
+  .taskListHeader {
+    padding: 12px;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ganttGrid {
+    grid-template-columns: 150px 1fr;
+  }
+
+  .taskListHeader {
+    padding: 8px;
+  }
+
+  .headerTitle {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,39 @@
+/**
+ * Timeline Component Styles
+ */
+
+.timeline {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  min-height: 60px;
+}
+
+.timelineCell {
+  border-right: 1px solid #e5e7eb;
+  padding: 8px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: #ffffff;
+}
+
+.dateLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .timelineCell {
+    padding: 6px 2px;
+  }
+
+  .dateLabel {
+    font-size: 11px;
+  }
+}

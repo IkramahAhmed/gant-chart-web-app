@@ -1,0 +1,74 @@
+/**
+ * Task List Component Styles
+ */
+
+.taskList {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.taskListItem {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.taskListItem:hover {
+  background-color: #f3f4f6;
+}
+
+.taskInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.taskColorIndicator {
+  width: 4px;
+  height: 24px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.taskDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.taskTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskAssignee {
+  font-size: 12px;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .taskListItem {
+    padding: 6px 12px;
+  }
+
+  .taskTitle {
+    font-size: 13px;
+  }
+
+  .taskAssignee {
+    font-size: 11px;
+  }
+}

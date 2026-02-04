@@ -1,0 +1,92 @@
+/**
+ * Task Bar Component Styles
+ */
+
+.taskBarContainer {
+  position: absolute;
+  margin-top: 4px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.taskBar {
+  position: relative;
+  height: 100%;
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  overflow: hidden;
+}
+
+.taskBar:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.taskBar:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.taskBarContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+}
+
+.taskBarTitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.taskBarProgress {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 2px 6px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.progressOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 1;
+  transition: width 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .taskBar {
+    padding: 3px 6px;
+  }
+
+  .taskBarTitle {
+    font-size: 11px;
+  }
+
+  .taskBarProgress {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+}
